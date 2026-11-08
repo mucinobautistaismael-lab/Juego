@@ -14,6 +14,7 @@ public class EventoBucle implements MouseListener, ActionListener {
     private int velocidad = -3;//la velocidadcon la que se mueve el fondo
     private Control control;//posision del jugador
     private VentanaNivel1 ventana;//referencia grafica
+    
     private int xPanelP = 0;//valor que va a tener en el eje x
     private int xPanelP1 = 1000;//valor en eje x del panelP1
     private Timer timer;//cada cuanto se actualisa el juego
@@ -47,20 +48,37 @@ public class EventoBucle implements MouseListener, ActionListener {
 
     private void perder(String motivo) {
         timer.stop();//detiene todo lo que esta en la ventana
-        int opcion = JOptionPane.showConfirmDialog(
+        
+        // Arreglo con las opciones que tendra el cuadro de dialogo
+        Object[] opciones = {"Repetir nivel", "Menú principal", "Salir"};
+
+        // Cuadro de dialogo personalizado con los 3 botones (devuelve 0, 1 o 2)
+        int seleccion = JOptionPane.showOptionDialog(
                 ventana,
-                motivo + "\nPuntaje final: " + score + "\n¿Deseas repetir el nivel?",
+                motivo + "\nPuntaje final: " + score + "\n¿Qué deseas hacer?",
                 "Fin del juego",
-                JOptionPane.YES_NO_OPTION
-        );//pestaña de muerte decides si salir o repetir el nivel
+                JOptionPane.YES_NO_CANCEL_OPTION,
+                JOptionPane.QUESTION_MESSAGE,
+                null,
+                opciones,
+                opciones[0]
+        );
 
         ventana.dispose();//cierra la ventana
 
-        if (opcion == JOptionPane.YES_OPTION) {
+        if (seleccion == 0) {
             VentanaNivel1 nuevoNivel = new VentanaNivel1();
             nuevoNivel.setLocationRelativeTo(null);
             nuevoNivel.setVisible(true);
-        }//nueva ventana del nivel 1
+        }//repite y abre de nuevo el nivel 1
+        else if (seleccion == 1) {
+            VentanaInicio ventana = new VentanaInicio();
+            ventana.setLocationRelativeTo(null);
+            ventana.setVisible(true);
+        }//regresa y abre la ventana del menu inicial
+        else {
+            System.exit(0);
+        }//cierra el juego por completo
     }
 
     private void verificarPuntos() {
