@@ -15,9 +15,10 @@ public class Juego {
      */
     public static void main(String[] args) {
         // TODO code application logic here
-        Ventanas ventana = new Ventanas();
+        VentanaInicio ventana = new VentanaInicio();
         ventana.setVisible(true);
         ventana.setLocationRelativeTo(null);
+        //Se crea el objeto ventana que es el que va habrir la posibilidad de ingresar a los juegos
     }
     
 }
